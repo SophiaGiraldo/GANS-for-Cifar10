@@ -7,6 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/1rO4uMUzxvwvTXN1IhXgyVbk3TJa1cX1O
 """
 
+# REQUIREMENTS
 !pip install tensorboardX
 
 ! pip freeze
@@ -16,7 +17,7 @@ from torch import nn, optim
 from torch.autograd.variable import Variable
 from torchvision import transforms, datasets
 
-## It is not necessary that you understand the code in this file, 
+## It is not necessary that you understand the class Logger, 
 ## as it is only used for visualization purposes.
 
 
@@ -157,6 +158,8 @@ class Logger:
         except OSError as e:
             if e.errno != errno.EEXIST:
                 raise
+
+#Load data and normalize it                
 
 def cifar10_data():
     
@@ -390,37 +393,4 @@ for epoch in range(num_epochs):
                 epoch, num_epochs, n_batch, num_batches,
                 d_error, g_error, d_pred_real, d_pred_fake
             )
-            
-            #d_error_t += [d_error.data.cpu().numpy()] 
-            #g_error_t += [g_error.data.cpu().numpy()]
-            #dt += [d_error.item()]
-            #gt += [g_error.item()]
-            #t = [100,200,300,400,500,600]
-            
-            
-            #plt.plot(d_error_t, t)
-            #plt.show()
-            
-            
-            #if (d_pred_real.mean() >= 0.5):
-             # conf_mat[0][0] +=1
-            #else:
-             # conf_mat[0][1] +=1
-           
-            #if (d_pred_fake.mean() >= 0.4):
-             # conf_mat[1][0] += 1
-            #else:
-             # conf_mat[1][1] += 1
-              
-              
-              
-            #print (conf_mat)
-
-plt.plot(t, dt[:6], 'r--', t,dt[6:],'g--')
-plt.axis([0, 800, 0.5, 1.4])
-plt.show()
-
-plt.plot(t, gt[:6], 'r--', t,gt[6:],'g--')
-plt.axis([0, 800, 1, 2.7])
-plt.show()
 
