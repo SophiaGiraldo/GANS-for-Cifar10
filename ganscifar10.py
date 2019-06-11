@@ -394,3 +394,30 @@ for epoch in range(num_epochs):
                 d_error, g_error, d_pred_real, d_pred_fake
             )
 
+# DATA AUGMENTATION
+
+from keras.preprocessing.image import ImageDataGenerator 
+import matplotlib.pyplot as plt
+import numpy as np
+from keras.datasets import cifar10
+import tensorflow as tf
+import itertools
+
+(x_train, Y_train), (x_test, y_test) = cifar10.load_data()
+
+Imgen = ImageDataGenerator(rotation_range=90, width_shift_range=1.0, height_shift_range=1.0, brightness_range=(1,2))
+X = []
+for j in range(1000):
+  iterImage = Imgen.flow(np.expand_dims(x_train[j,:,:,:], axis=0))
+  i = [next(iterImage) for i in range(1)]
+  X  += i
+
+#VISUALIZE AUGMENTED DATA
+import numpy as np
+plt.imshow((X[999][0]).astype(np.uint8))
+plt.show()
+
+# PASS AUGMENTED DATA TO THE DISCRIMINATOR
+x = Variable(torch.from_numpy(X[:300][0]))
+fake_data = x.reshape(1,3072)
+d_error, d_pred_real, d_pred_fake = train_discriminator(d_optimizer, real_data, fake_data)
